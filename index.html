@@ -462,13 +462,24 @@
                                 <span>Launch Rermius from the Start Menu or Desktop shortcut</span>
                             </li>
                         </ol>
-                        <div class="mt-6">
+                        <div class="mt-6 space-y-4">
                             <a href="https://github.com/rermius/rermius/releases" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-white rounded-lg font-medium transition-colors">
                                 Download for Windows
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                 </svg>
                             </a>
+                            <div class="bg-accent/10 border border-accent/30 rounded-lg p-4">
+                                <div class="flex gap-2 items-start">
+                                    <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-accent mb-1">Windows SmartScreen</p>
+                                        <p class="text-xs text-text-secondary">If Windows SmartScreen blocks the installer, click "More info" → "Run anyway" to proceed with installation.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -500,7 +511,20 @@
                             </a>
                             <div class="bg-bg-dark/50 border border-border-color rounded-lg p-4">
                                 <p class="text-sm text-text-secondary mb-2">Or install via Homebrew:</p>
-                                <code class="block bg-bg-dark px-4 py-2 rounded text-sm text-text-primary font-mono">brew install --cask rermius</code>
+                                <code class="block bg-bg-dark px-4 py-2 rounded text-sm text-text-primary font-mono">brew tap rermius/rermius-homebrew<br>brew install --cask rermius</code>
+                            </div>
+                            <div class="bg-accent/10 border border-accent/30 rounded-lg p-4">
+                                <div class="flex gap-2 items-start">
+                                    <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-accent mb-1">Unsigned Application</p>
+                                        <p class="text-xs text-text-secondary mb-2">This app is not signed. If macOS blocks it, run this command:</p>
+                                        <code class="block bg-bg-dark px-3 py-2 rounded text-xs text-text-primary font-mono">sudo xattr -rd com.apple.quarantine /Applications/Rermius.app</code>
+                                        <p class="text-xs text-text-secondary mt-2">Or right-click the app → Open → Open to bypass Gatekeeper</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
