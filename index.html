@@ -11,9 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Rermius - Modern SSH Terminal Manager">
     <meta property="og:description" content="Powerful desktop application combining SSH connectivity, terminal sessions, and file transfers in a beautiful unified interface">
-    <meta property="og:image" content="assets/og-image.png">
+    <meta property="og:image" content="assets/icons/icon.png">
 
     <title>Rermius - Modern SSH Terminal Manager</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="assets/icons/icon-128.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="assets/icons/icon-256.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,12 +66,10 @@
         </div>
 
         <div class="max-w-6xl mx-auto text-center relative z-10">
-            <!-- Logo/Icon placeholder -->
+            <!-- App Logo -->
             <div class="mb-8 flex justify-center">
-                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shadow-lg shadow-primary/25">
-                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
+                <div class="w-24 h-24 flex items-center justify-center">
+                    <img src="assets/icons/icon.svg" alt="Rermius Logo" class="w-full h-full">
                 </div>
             </div>
 
@@ -97,23 +100,19 @@
             <!-- Download Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
                 <a href="#" id="btn-windows" class="download-btn group flex items-center gap-3 bg-bg-secondary hover:bg-bg-tertiary border-2 border-border-color hover:border-primary px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer min-w-[200px] justify-center">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6" fill="white" viewBox="0 0 24 24">
                         <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
                     </svg>
                     <span class="font-medium">Windows</span>
                 </a>
 
                 <a href="#" id="btn-macos" class="download-btn group flex items-center gap-3 bg-bg-secondary hover:bg-bg-tertiary border-2 border-border-color hover:border-primary px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer min-w-[200px] justify-center">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
-                    </svg>
+                    <img src="https://cdn.simpleicons.org/apple/FFFFFF" alt="macOS" class="w-6 h-6">
                     <span class="font-medium">macOS</span>
                 </a>
 
                 <a href="#" id="btn-linux" class="download-btn group flex items-center gap-3 bg-bg-secondary hover:bg-bg-tertiary border-2 border-border-color hover:border-primary px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer min-w-[200px] justify-center">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.84-.415 1.942-.348 2.8.069.834.478 2.456 1.075 3.155.591.685 1.827 1.034 3.553 1.034 1.524 0 2.645-.315 3.537-.939.801-.559 1.391-1.32 1.814-2.062.423.741 1.013 1.503 1.814 2.062.892.624 2.013.939 3.537.939 1.726 0 2.962-.349 3.553-1.034.597-.699 1.006-2.321 1.075-3.155.067-.858-.07-1.96-.348-2.8-.589-1.771-1.831-3.47-2.716-4.521-.75-1.067-.974-1.928-1.05-3.02-.065-1.491 1.056-5.965-3.17-6.298-.165-.013-.325-.021-.48-.021zm-.002 1.5c.104 0 .208.006.312.016 2.394.191 2.226 2.952 2.07 4.695-.146 1.642.022 2.819.948 4.103.853 1.115 2.037 2.8 2.556 4.381.191.581.315 1.434.261 2.12-.054.688-.386 1.781-.783 2.186-.397.405-1.213.645-2.366.645-1.234 0-2.042-.239-2.698-.716-.656-.477-1.175-1.197-1.544-1.948l-.368-.75-.368.75c-.369.751-.888 1.471-1.544 1.948-.656.477-1.464.716-2.698.716-1.153 0-1.969-.24-2.366-.645-.397-.405-.729-1.498-.783-2.186-.054-.686.07-1.539.261-2.12.519-1.581 1.703-3.266 2.556-4.381.926-1.284 1.094-2.461.948-4.103-.156-1.743-.324-4.504 2.07-4.695.104-.01.208-.016.312-.016z"/>
-                    </svg>
+                    <img src="https://cdn.simpleicons.org/linux/FFFFFF" alt="Linux" class="w-6 h-6">
                     <span class="font-medium">Linux</span>
                 </a>
             </div>
