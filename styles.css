@@ -5,6 +5,14 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Invisible anchor links */
+.anchor {
+    display: block;
+    position: relative;
+    top: -80px;
+    visibility: hidden;
+}
+
 /* Custom animations */
 @keyframes fade-in {
     from {
