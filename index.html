@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rermius - Modern SSH/SFTP terminal manager. Powerful desktop application combining SSH connectivity, terminal sessions, and file transfers.">
+    <meta name="keywords" content="SSH, SFTP, FTP, terminal, manager, desktop, Tauri, Rust, SvelteKit">
+    <meta name="author" content="Rermius">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rermius - Modern SSH Terminal Manager">
+    <meta property="og:description" content="Powerful desktop application combining SSH connectivity, terminal sessions, and file transfers in a beautiful unified interface">
+    <meta property="og:image" content="assets/og-image.png">
+
+    <title>Rermius - Modern SSH Terminal Manager</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        'primary-hover': '#2563eb',
+                        active: '#21b568',
+                        accent: '#f97316',
+                        'bg-dark': '#1a1d29',
+                        'bg-secondary': '#252939',
+                        'bg-tertiary': '#2a2f3f',
+                        'text-primary': '#f3f4f6',
+                        'text-secondary': '#9ca3af',
+                        'border-color': '#374151',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="font-body bg-gradient-to-br from-[#0F172A] via-[#1a1d29] to-[#0F172A] text-text-primary antialiased">
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
+        <!-- Background decoration -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <!-- Logo/Icon placeholder -->
+            <div class="mb-8 flex justify-center">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shadow-lg shadow-primary/25">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <h1 class="font-heading text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-text-primary via-primary to-text-primary bg-clip-text text-transparent animate-fade-in">
+                Rermius
+            </h1>
+            <p class="font-heading text-2xl md:text-3xl text-primary mb-4">
+                Modern SSH Terminal Manager
+            </p>
+            <div class="flex justify-center gap-3 mb-6">
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-active/20 border border-active rounded-lg text-active text-sm font-medium">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Free & Open Source
+                </span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 border border-primary rounded-lg text-primary text-sm font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                    Encrypted & Secure
+                </span>
+            </div>
+            <p class="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto mb-12 leading-relaxed">
+                Powerful desktop application combining SSH connectivity, terminal sessions, and file transfers in a beautiful unified interface
+            </p>
+
+            <!-- Download Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+                <a href="#" id="btn-windows" class="download-btn group flex items-center gap-3 bg-bg-secondary hover:bg-bg-tertiary border-2 border-border-color hover:border-primary px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer min-w-[200px] justify-center">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                    </svg>
+                    <span class="font-medium">Windows</span>
+                </a>
+
+                <a href="#" id="btn-macos" class="download-btn group flex items-center gap-3 bg-bg-secondary hover:bg-bg-tertiary border-2 border-border-color hover:border-primary px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer min-w-[200px] justify-center">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                    </svg>
+                    <span class="font-medium">macOS</span>
+                </a>
+
+                <a href="#" id="btn-linux" class="download-btn group flex items-center gap-3 bg-bg-secondary hover:bg-bg-tertiary border-2 border-border-color hover:border-primary px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer min-w-[200px] justify-center">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.84-.415 1.942-.348 2.8.069.834.478 2.456 1.075 3.155.591.685 1.827 1.034 3.553 1.034 1.524 0 2.645-.315 3.537-.939.801-.559 1.391-1.32 1.814-2.062.423.741 1.013 1.503 1.814 2.062.892.624 2.013.939 3.537.939 1.726 0 2.962-.349 3.553-1.034.597-.699 1.006-2.321 1.075-3.155.067-.858-.07-1.96-.348-2.8-.589-1.771-1.831-3.47-2.716-4.521-.75-1.067-.974-1.928-1.05-3.02-.065-1.491 1.056-5.965-3.17-6.298-.165-.013-.325-.021-.48-.021zm-.002 1.5c.104 0 .208.006.312.016 2.394.191 2.226 2.952 2.07 4.695-.146 1.642.022 2.819.948 4.103.853 1.115 2.037 2.8 2.556 4.381.191.581.315 1.434.261 2.12-.054.688-.386 1.781-.783 2.186-.397.405-1.213.645-2.366.645-1.234 0-2.042-.239-2.698-.716-.656-.477-1.175-1.197-1.544-1.948l-.368-.75-.368.75c-.369.751-.888 1.471-1.544 1.948-.656.477-1.464.716-2.698.716-1.153 0-1.969-.24-2.366-.645-.397-.405-.729-1.498-.783-2.186-.054-.686.07-1.539.261-2.12.519-1.581 1.703-3.266 2.556-4.381.926-1.284 1.094-2.461.948-4.103-.156-1.743-.324-4.504 2.07-4.695.104-.01.208-.016.312-.016z"/>
+                    </svg>
+                    <span class="font-medium">Linux</span>
+                </a>
+            </div>
+
+            <!-- OS Detection -->
+            <div id="os-detection" class="text-sm text-text-secondary mb-8">
+                Detected OS: <span id="detected-os" class="text-primary font-medium">Detecting...</span>
+            </div>
+
+            <!-- GitHub CTA -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="https://github.com/rermius/rermius" target="_blank" class="inline-flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    <span class="font-medium">View on GitHub</span>
+                </a>
+                <span id="github-stars" class="inline-flex items-center gap-1 px-4 py-2 bg-bg-secondary/50 border border-border-color rounded-lg text-sm">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+                    </svg>
+                    <span id="star-count">Loading...</span>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Screenshots Gallery -->
+    <section id="gallery" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">See It in Action</h2>
+                <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+                    Explore the interface and discover powerful features designed for developers and system administrators
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Screenshot 1 -->
+                <div class="screenshot-card group cursor-pointer" data-screenshot="1">
+                    <div class="relative overflow-hidden rounded-xl border border-border-color bg-bg-secondary aspect-video">
+                        <img src="assets/screenshots/ssh.png" alt="Terminal interface with multiple tabs" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bg-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="p-4 text-sm font-medium">Multiple terminal sessions</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-text-secondary text-sm">Terminal Interface</p>
+                </div>
+
+                <!-- Screenshot 2 -->
+                <div class="screenshot-card group cursor-pointer" data-screenshot="2">
+                    <div class="relative overflow-hidden rounded-xl border border-border-color bg-bg-secondary aspect-video">
+                        <img src="assets/screenshots/host.png" alt="SSH host manager sidebar" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bg-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="p-4 text-sm font-medium">Organize hosts with groups</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-text-secondary text-sm">SSH Host Manager</p>
+                </div>
+
+                <!-- Screenshot 3 -->
+                <div class="screenshot-card group cursor-pointer" data-screenshot="3">
+                    <div class="relative overflow-hidden rounded-xl border border-border-color bg-bg-secondary aspect-video">
+                        <img src="assets/screenshots/sftp.png" alt="SFTP file browser" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bg-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="p-4 text-sm font-medium">Drag & drop file transfers</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-text-secondary text-sm">SFTP File Browser</p>
+                </div>
+
+                <!-- Screenshot 4 -->
+                <div class="screenshot-card group cursor-pointer" data-screenshot="4">
+                    <div class="relative overflow-hidden rounded-xl border border-border-color bg-bg-secondary aspect-video">
+                        <img src="assets/screenshots/key.png" alt="SSH keychain management" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bg-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="p-4 text-sm font-medium">Manage all your SSH keys</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-text-secondary text-sm">SSH Keychain</p>
+                </div>
+
+                <!-- Screenshot 5 -->
+                <div class="screenshot-card group cursor-pointer" data-screenshot="5">
+                    <div class="relative overflow-hidden rounded-xl border border-border-color bg-bg-secondary aspect-video">
+                        <img src="assets/screenshots/host-chaining.png" alt="Port forwarding configuration" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bg-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="p-4 text-sm font-medium">Local, remote, and SOCKS forwarding</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-text-secondary text-sm">Port Forwarding</p>
+                </div>
+
+                <!-- Screenshot 6 -->
+                <div class="screenshot-card group cursor-pointer" data-screenshot="6">
+                    <div class="relative overflow-hidden rounded-xl border border-border-color bg-bg-secondary aspect-video">
+                        <img src="assets/screenshots/snippet.png" alt="Command snippets library" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bg-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="p-4 text-sm font-medium">Save frequently used commands</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-text-secondary text-sm">Command Snippets</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-20 px-4 bg-bg-dark/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">Powerful Features</h2>
+                <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+                    Everything you need for managing SSH connections and remote servers
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Feature 1 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">Multiple Terminal Sessions</h3>
+                    <p class="text-text-secondary">Manage multiple terminal sessions with drag-and-drop tab management. Switch between local and remote terminals seamlessly.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">SSH Host Management</h3>
+                    <p class="text-text-secondary">Organize hosts with groups, color coding, and quick connections. Import from ~/.ssh/config with one click.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">Integrated SFTP/FTP Browser</h3>
+                    <p class="text-text-secondary">Browse, upload, and download files via SFTP/FTP alongside your terminals with drag-and-drop support and progress tracking.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">SSH Keychain</h3>
+                    <p class="text-text-secondary">Import, organize, and manage SSH keys (RSA, Ed25519, ECDSA) with secure passphrase support and encrypted storage.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">Port Forwarding</h3>
+                    <p class="text-text-secondary">Configure local, remote, and dynamic (SOCKS) port forwarding with an intuitive interface. Perfect for secure tunneling.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">Command Snippets</h3>
+                    <p class="text-text-secondary">Save and reuse frequently used commands. Organize snippets by category and quickly insert them into any terminal session.</p>
+                </div>
+
+                <!-- Feature 7 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">Multi-Workspace Support</h3>
+                    <p class="text-text-secondary">Organize connections by project or team. Switch between workspaces to keep your SSH hosts and terminals organized.</p>
+                </div>
+
+                <!-- Feature 8 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-primary/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">ProxyJump Chaining</h3>
+                    <p class="text-text-secondary">Connect through multiple jump hosts easily. Configure complex SSH tunneling scenarios with a simple interface.</p>
+                </div>
+
+                <!-- Feature 9 -->
+                <div class="feature-card group p-6 rounded-xl bg-bg-secondary/50 border border-border-color hover:border-active/50 transition-all duration-300 cursor-pointer backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-active/10 flex items-center justify-center mb-4 group-hover:bg-active/20 transition-colors">
+                        <svg class="w-6 h-6 text-active" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold mb-2">Encrypted Sync to GitHub</h3>
+                    <p class="text-text-secondary">Safely sync your SSH hosts, keys, and settings to GitHub with end-to-end encryption. Customize sync options and keep your data secure across devices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech-stack" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">Built with Modern Technology</h2>
+                <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+                    Leveraging cutting-edge tools for performance, security, and cross-platform compatibility
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Tech 1 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0L3 7v10l9 7 9-7V7L12 0zm6.9 15.5L12 20l-6.9-4.5V8.5L12 4l6.9 4.5v7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">Tauri 2</h3>
+                    <p class="text-xs text-text-secondary mt-1">Rust Framework</p>
+                </div>
+
+                <!-- Tech 2 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.15 2.587L18.21.21a1.494 1.494 0 00-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 00-1.276.057L.327 7.261A1 1 0 00.326 8.74L3.899 12 .326 15.26a1 1 0 00.001 1.479L1.65 17.94a.999.999 0 001.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 001.704.29l4.942-2.377A1.5 1.5 0 0024 20.06V3.939a1.5 1.5 0 00-.85-1.352z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">SvelteKit 5</h3>
+                    <p class="text-xs text-text-secondary mt-1">Frontend</p>
+                </div>
+
+                <!-- Tech 3 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-active" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M10.8851 2.74999L0.00500488 12.9942L10.8851 20.25V15.75L4.68469 10.5L10.8851 7.52499V2.74999Z"/>
+                            <path d="M13.1149 2.74999L24.0001 12.9942L13.1149 20.25V15.75L19.3153 10.5L13.1149 7.52499V2.74999Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">Rust</h3>
+                    <p class="text-xs text-text-secondary mt-1">Backend</p>
+                </div>
+
+                <!-- Tech 4 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12S0 18.623 0 12 5.377 0 12 0zm0 2.182c-5.423 0-9.818 4.395-9.818 9.818 0 5.423 4.395 9.818 9.818 9.818 5.423 0 9.818-4.395 9.818-9.818 0-5.423-4.395-9.818-9.818-9.818z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">xterm.js 6</h3>
+                    <p class="text-xs text-text-secondary mt-1">Terminal</p>
+                </div>
+
+                <!-- Tech 5 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.5 9.51a4.22 4.22 0 01-1.91-1.34A5.77 5.77 0 0015 4a4.72 4.72 0 00-6 0 5.77 5.77 0 00-1.6 4.17 4.22 4.22 0 01-1.9 1.34 4 4 0 00-2.3 3.74A3.6 3.6 0 005 16.5a4.21 4.21 0 011.91 1.34A5.77 5.77 0 008.5 22a4.72 4.72 0 006 0 5.77 5.77 0 001.6-4.17 4.22 4.22 0 011.9-1.34 4 4 0 002.3-3.74A3.6 3.6 0 0018.5 9.51z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">Tailwind CSS 4</h3>
+                    <p class="text-xs text-text-secondary mt-1">Styling</p>
+                </div>
+
+                <!-- Tech 6 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 17.236c-.238.334-.522.638-.85.901-.674.54-1.487.901-2.374 1.051-.888.151-1.792.103-2.662-.133-.87-.236-1.676-.64-2.363-1.182-.343-.27-.659-.567-.942-.888-.567-.642-1.022-1.374-1.345-2.167-.323-.793-.516-1.635-.573-2.489-.057-.854.024-1.714.242-2.547.218-.833.559-1.634 1.012-2.364.453-.731 1.014-1.387 1.664-1.942.65-.555 1.385-.996 2.178-1.3.793-.303 1.635-.462 2.489-.471.854-.009 1.711.122 2.537.391.826.269 1.607.667 2.314 1.183.353.258.681.546.98.862.598.633 1.081 1.36 1.431 2.147.351.787.561 1.626.625 2.478.064.853-.014 1.714-.236 2.547-.222.833-.567 1.634-1.025 2.364z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">russh</h3>
+                    <p class="text-xs text-text-secondary mt-1">SSH Protocol</p>
+                </div>
+
+                <!-- Tech 7 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-active" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm0 2.182a9.818 9.818 0 019.818 9.818A9.818 9.818 0 0112 21.818 9.818 9.818 0 012.182 12 9.818 9.818 0 0112 2.182z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">tokio</h3>
+                    <p class="text-xs text-text-secondary mt-1">Async Runtime</p>
+                </div>
+
+                <!-- Tech 8 -->
+                <div class="tech-badge p-6 rounded-xl bg-bg-secondary/30 border border-border-color hover:border-primary/50 hover:bg-bg-secondary/50 transition-all duration-300 cursor-pointer text-center group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-bg-tertiary flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading font-semibold text-sm">WebGL</h3>
+                    <p class="text-xs text-text-secondary mt-1">Acceleration</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="py-20 px-4 bg-bg-dark/50">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">Installation</h2>
+                <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+                    Get started in minutes on Windows, macOS, or Linux
+                </p>
+            </div>
+
+            <!-- Platform Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="platform-tab active px-6 py-3 rounded-lg font-medium transition-all duration-200" data-platform="windows">
+                    Windows
+                </button>
+                <button class="platform-tab px-6 py-3 rounded-lg font-medium transition-all duration-200" data-platform="macos">
+                    macOS
+                </button>
+                <button class="platform-tab px-6 py-3 rounded-lg font-medium transition-all duration-200" data-platform="linux">
+                    Linux
+                </button>
+            </div>
+
+            <!-- Platform Content -->
+            <div class="platform-content">
+                <!-- Windows -->
+                <div id="windows-content" class="platform-panel active">
+                    <div class="bg-bg-secondary/50 border border-border-color rounded-xl p-8">
+                        <h3 class="font-heading text-xl font-semibold mb-4">Windows Installation</h3>
+                        <ol class="space-y-4 text-text-secondary">
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">1</span>
+                                <span>Download the NSIS installer from the releases page</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">2</span>
+                                <span>Run the installer and follow the setup wizard</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">3</span>
+                                <span>Launch Rermius from the Start Menu or Desktop shortcut</span>
+                            </li>
+                        </ol>
+                        <div class="mt-6">
+                            <a href="https://github.com/rermius/rermius/releases" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-white rounded-lg font-medium transition-colors">
+                                Download for Windows
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- macOS -->
+                <div id="macos-content" class="platform-panel">
+                    <div class="bg-bg-secondary/50 border border-border-color rounded-xl p-8">
+                        <h3 class="font-heading text-xl font-semibold mb-4">macOS Installation</h3>
+                        <ol class="space-y-4 text-text-secondary">
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">1</span>
+                                <span>Download the DMG file from the releases page</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">2</span>
+                                <span>Open the DMG and drag Rermius to your Applications folder</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">3</span>
+                                <span>Launch Rermius from Applications or Spotlight</span>
+                            </li>
+                        </ol>
+                        <div class="mt-6 space-y-4">
+                            <a href="https://github.com/rermius/rermius/releases" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-white rounded-lg font-medium transition-colors">
+                                Download for macOS
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </a>
+                            <div class="bg-bg-dark/50 border border-border-color rounded-lg p-4">
+                                <p class="text-sm text-text-secondary mb-2">Or install via Homebrew:</p>
+                                <code class="block bg-bg-dark px-4 py-2 rounded text-sm text-text-primary font-mono">brew install --cask rermius</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Linux -->
+                <div id="linux-content" class="platform-panel">
+                    <div class="bg-bg-secondary/50 border border-border-color rounded-xl p-8">
+                        <h3 class="font-heading text-xl font-semibold mb-4">Linux Installation</h3>
+                        <ol class="space-y-4 text-text-secondary mb-6">
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">1</span>
+                                <span>Download the AppImage, .deb, or .rpm package</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">2</span>
+                                <span>Make the AppImage executable or install the package</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-semibold">3</span>
+                                <span>Launch Rermius from your application menu</span>
+                            </li>
+                        </ol>
+                        <div class="space-y-4">
+                            <a href="https://github.com/rermius/rermius/releases" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-white rounded-lg font-medium transition-colors">
+                                Download for Linux
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </a>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-bg-dark/50 border border-border-color rounded-lg p-4">
+                                    <p class="text-sm text-text-secondary mb-2">AppImage:</p>
+                                    <code class="block bg-bg-dark px-4 py-2 rounded text-sm text-text-primary font-mono">chmod +x Rermius.AppImage<br>./Rermius.AppImage</code>
+                                </div>
+                                <div class="bg-bg-dark/50 border border-border-color rounded-lg p-4">
+                                    <p class="text-sm text-text-secondary mb-2">Debian/Ubuntu:</p>
+                                    <code class="block bg-bg-dark px-4 py-2 rounded text-sm text-text-primary font-mono">sudo dpkg -i rermius.deb</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub Releases Link -->
+            <div class="text-center mt-8">
+                <a href="https://github.com/rermius/rermius/releases" target="_blank" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-colors">
+                    View all releases on GitHub
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub CTA Section -->
+    <section id="github-cta" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-gradient-to-br from-bg-secondary to-bg-tertiary border-2 border-primary/30 rounded-2xl p-12 text-center">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </div>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">Open Source & Community Driven</h2>
+                <p class="text-lg text-text-secondary mb-8 max-w-2xl mx-auto">
+                    Rermius is MIT licensed and built in the open. Contribute, report issues, or star the project on GitHub.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://github.com/rermius/rermius" target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-xl font-medium transition-all duration-200 hover:scale-105">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+                        </svg>
+                        Star on GitHub
+                    </a>
+                    <a href="https://github.com/rermius/rermius/issues" target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-bg-secondary hover:bg-bg-tertiary border-2 border-border-color hover:border-primary text-text-primary rounded-xl font-medium transition-all duration-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        Report Issue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 border-t border-border-color">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="font-heading font-semibold text-lg mb-4">Rermius</h3>
+                    <p class="text-text-secondary text-sm">
+                        Modern SSH terminal manager for developers and system administrators.
+                    </p>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="font-heading font-semibold text-lg mb-4">Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://github.com/rermius/rermius" target="_blank" class="text-text-secondary hover:text-primary transition-colors">GitHub</a></li>
+                        <li><a href="https://github.com/rermius/rermius#readme" target="_blank" class="text-text-secondary hover:text-primary transition-colors">Documentation</a></li>
+                        <li><a href="https://github.com/rermius/rermius/issues" target="_blank" class="text-text-secondary hover:text-primary transition-colors">Issues</a></li>
+                        <li><a href="https://github.com/rermius/rermius/releases" target="_blank" class="text-text-secondary hover:text-primary transition-colors">Releases</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="font-heading font-semibold text-lg mb-4">License</h3>
+                    <p class="text-text-secondary text-sm mb-4">
+                        MIT License - Open Source
+                    </p>
+                    <a href="#hero" class="inline-flex items-center gap-1 text-primary hover:text-primary-hover transition-colors text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        </svg>
+                        Back to top
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-border-color pt-8 text-center text-text-secondary text-sm">
+                <p>&copy; 2025 Rermius. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

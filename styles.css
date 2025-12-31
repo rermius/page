@@ -1,0 +1,427 @@
+/* Custom styles for Rermius Landing Page */
+
+/* Smooth scrolling behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 1s ease-out;
+}
+
+/* Screenshot cards hover effects */
+.screenshot-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.screenshot-card:hover {
+    transform: translateY(-4px);
+}
+
+.screenshot-card img {
+    transition: transform 0.3s ease;
+}
+
+.screenshot-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Feature cards hover effects */
+.feature-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+}
+
+/* Tech badge hover effects */
+.tech-badge {
+    transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+}
+
+/* Download buttons */
+.download-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.download-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.download-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.download-btn.detected {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* Platform tabs */
+.platform-tab {
+    background: rgba(37, 41, 57, 0.5);
+    border: 2px solid #374151;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.platform-tab.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+.platform-tab:hover:not(.active) {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* Platform panels */
+.platform-panel {
+    display: none;
+    animation: fade-in 0.3s ease-out;
+}
+
+.platform-panel.active {
+    display: block;
+}
+
+/* Scroll animations - fade in on scroll */
+.fade-in-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Code blocks */
+code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Gradient text animation */
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+h1.animate-fade-in {
+    background-size: 200% auto;
+    animation: gradient-shift 3s ease infinite, fade-in 1s ease-out;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .screenshot-card:hover {
+        transform: none;
+    }
+
+    .screenshot-card:hover img {
+        transform: none;
+    }
+
+    .feature-card:hover {
+        transform: none;
+    }
+
+    .tech-badge:hover {
+        transform: none;
+    }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1d29;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3b82f6;
+}
+
+/* Loading spinner for GitHub stars */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, .cursor-pointer {
+    transition: all 0.2s ease;
+}
+
+/* Hero background animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-20px) scale(1.05);
+    }
+}
+
+#hero .absolute.inset-0 > div {
+    animation: float 6s ease-in-out infinite;
+}
+
+#hero .absolute.inset-0 > div:nth-child(2) {
+    animation-delay: 3s;
+}
+
+/* Glassmorphism effect for cards */
+.glass-card {
+    background: rgba(37, 41, 57, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Link underline animation */
+a.text-text-secondary:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .border-border-color {
+        border-color: #ffffff;
+    }
+
+    .text-text-secondary {
+        color: #ffffff;
+    }
+}
+
+/* Dark mode optimization */
+@media (prefers-color-scheme: dark) {
+    /* Already optimized for dark mode by default */
+}
+
+/* Selection color */
+::selection {
+    background: rgba(59, 130, 246, 0.3);
+    color: #f3f4f6;
+}
+
+::-moz-selection {
+    background: rgba(59, 130, 246, 0.3);
+    color: #f3f4f6;
+}
+
+/* Lightbox styles (optional) */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lightbox.active {
+    display: flex;
+    animation: fade-in 0.3s ease-out;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    z-index: 10000;
+    transition: color 0.2s ease;
+}
+
+.lightbox-close:hover {
+    color: #3b82f6;
+}
+
+/* Loading state for images */
+img[data-loading="true"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img[data-loading="false"] {
+    opacity: 1;
+}
+
+/* Button active states */
+button:active,
+a:active {
+    transform: scale(0.98);
+}
+
+/* Tooltip styles (if needed) */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    background: #1a1d29;
+    color: #f3f4f6;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    margin-bottom: 8px;
+}
+
+.tooltip:hover::before {
+    opacity: 1;
+}
+
+/* Grid animations */
+.grid > * {
+    animation: fade-in 0.5s ease-out backwards;
+}
+
+.grid > *:nth-child(1) { animation-delay: 0.05s; }
+.grid > *:nth-child(2) { animation-delay: 0.1s; }
+.grid > *:nth-child(3) { animation-delay: 0.15s; }
+.grid > *:nth-child(4) { animation-delay: 0.2s; }
+.grid > *:nth-child(5) { animation-delay: 0.25s; }
+.grid > *:nth-child(6) { animation-delay: 0.3s; }
+.grid > *:nth-child(7) { animation-delay: 0.35s; }
+.grid > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .download-btn {
+        width: 100%;
+    }
+
+    .platform-tab {
+        flex: 1;
+        min-width: 100px;
+    }
+}
+
+/* Ensure proper spacing on very small screens */
+@media (max-width: 320px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
